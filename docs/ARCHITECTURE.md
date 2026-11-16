@@ -117,3 +117,13 @@ Before writing Steam config, confirm current SteamOS shortcut format, non-Steam 
 6. Update strategy interface and one release-asset workflow.
 7. Executable detection and launch target model.
 8. Steam integration after format research.
+
+
+## AppImage and user-space delivery
+The final release is a standalone Linux AppImage. The application should run when opened from the desktop/file manager and offer a straightforward way to save/install a copy into the user's local space. Keep the AppImage immutable and keep mutable state in standard per-user writable locations. Keep project installations, source trees, and game data at their configured locations; never bundle or relocate them into the AppImage. Select the packaging toolchain after validating PySide6/Qt runtime compatibility and SteamOS behaviour. Packaging must be reproducible and tested as part of release acceptance.
+
+## Blocker management: Pin and Assess
+Use a lightweight issue record for blockers encountered during development. Capture reproduction context, evidence, affected milestone, requirement criticality, estimated effort, technical risk, and possible downstream effects. Choose among fix-now, defer, or a maintainable alternative. Prefer the simplest supported path that preserves data safety and future compatibility. Do not hide a blocker behind an unexplained workaround.
+
+## User-facing development procedure
+Avoid random terminal trial-and-error. Commands should be deliberate, explained, minimal, and followed by inspection of output before the next step. Prefer GUI workflows and automate repeatable setup, testing, and packaging. Destructive changes require explicit user approval.
