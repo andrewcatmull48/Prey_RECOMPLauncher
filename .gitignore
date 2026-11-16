@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Build / packaging
+build/
+dist/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.sqlite
+*.sqlite3
+*.db
+config.local.toml
+settings.local.json
+
+# Logs and runtime
+*.log
+logs/
+.cache/
+downloads/
+staging/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Generated artwork cache
+artwork-cache/
