@@ -62,3 +62,22 @@
 4. Stage and validate updates; retain rollback capability.
 5. Preserve unrelated Steam entries and settings.
 6. Use project definitions/recipes for special cases instead of hardcoding games into the app.
+
+
+## Final packaging and installation requirement
+- [ ] Produce a standalone SteamOS/Linux AppImage as the final distributable.
+- [ ] Ensure it launches by opening the AppImage from the desktop/file manager.
+- [ ] Provide a simple option to save/install it into the user's local space (target such as `~/.local`, exact location to be validated).
+- [ ] Keep application data/configuration in appropriate per-user locations, separate from the AppImage itself.
+- [ ] Test desktop integration and launch behaviour on SteamOS.
+- [ ] Avoid requiring users to run a sequence of terminal commands to install or operate the application.
+
+## Pin and Assess process
+When a blocker, missing capability, or awkward integration is encountered:
+1. **Pin** — record the issue, relevant logs/output, affected feature, and what was being attempted.
+2. **Assess** — determine whether it is required now, its likely repair effort, technical risk, and downstream impact.
+3. **Choose** — fix now, defer with a clear note, or select a simpler reliable alternative.
+4. **Protect** — prefer the path of least resistance that does not create fragile workarounds or future architectural problems.
+5. **Verify** — test the chosen approach before proceeding and record the decision.
+
+The user should not be sent random commands to see whether something works. Commands must be purposeful, explained, minimal, and validated against their output. Prefer GUI operations and automate repetitive setup/build/package tasks.
