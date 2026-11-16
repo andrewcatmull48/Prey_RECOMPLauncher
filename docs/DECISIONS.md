@@ -22,3 +22,15 @@ Stage and validate updates before activation. Preserve saves, settings, original
 
 ### GUI customisation is on the roadmap
 Themes, layouts, adjustable panels, and configurable library views are planned after the core library and automation.
+
+
+## 2026-11-16 — Delivery and development workflow clarification
+
+### Final distributable is an AppImage
+The completed application should be delivered as a standalone SteamOS/Linux AppImage. It should open from the desktop/file manager and be savable/installed into the user's local space (likely under `~/.local`; exact location and desktop integration are to be validated). Mutable state belongs in writable per-user locations, not inside the AppImage.
+
+### Pin and Assess is the blocker policy
+When a blocker appears, pin it with evidence and context, assess necessity, repair effort, risk, and future impact, then choose fix now, defer, or a simpler maintainable alternative. Prefer the path of least resistance without creating fragile workarounds or future issues.
+
+### No speculative terminal troubleshooting
+The user does not want random commands hoping they fix something. Commands must be purposeful, explained, minimal, and validated against output before continuing. Prefer GUI workflows and automate setup, diagnostics, builds, and packaging. Destructive actions require explicit approval.
