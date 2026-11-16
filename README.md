@@ -26,3 +26,12 @@ Project definition and foundation. No application functionality is implemented y
 
 ## Initial technical direction
 Python, PySide6, SQLite, Git/GitHub integrations, and safe Steam shortcut integration. These choices may evolve as implementation research proceeds.
+
+## Final delivery target
+The finished application is intended to be distributed as a standalone **AppImage** for SteamOS/Linux. The user should be able to open it like a desktop application and save/install it into their local user space (for example, under `~/.local`). It should not require a system-wide installation or a terminal-based setup process. The exact desktop integration and installation location will be confirmed and tested on SteamOS.
+
+## Development workflow: Pin and Assess
+When a blocker or unsupported feature appears, record it as a pinned item with the evidence, affected feature, and current context. Assess whether it is essential, how difficult/risky it is to fix, and whether a simpler reliable approach exists. Decide to fix now, defer, or take the least disruptive alternative. Avoid speculative rewrites and avoid letting temporary workarounds create future breakage.
+
+## Working style
+This project is developed deliberately, one verified step at a time. Do not give the user random terminal commands or ask them to try unexplained fixes. Prefer GUI workflows and automate setup, testing, and packaging. Every command should have a clear purpose, be explained briefly, and be followed by inspection of its output before the next step. Keep instructions minimal and reversible; never make destructive changes without explicit approval.
