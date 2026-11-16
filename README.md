@@ -13,7 +13,7 @@ An automation-first library and lifecycle manager for game recompilations on Ste
 - Maintain Steam non-Steam shortcuts without duplicates, including launch paths, arguments, artwork, and Proton settings.
 - Launch native Linux binaries natively and configure Proton for Windows executables.
 - Preserve saves, game assets, and user configuration; stage updates and roll back failures.
-- Offer a customisable GUI (planned roadmap feature).
+- Deliver a polished, GUI-first desktop application with a deliberate, non-dashboard visual identity.
 
 ## Documentation
 - [Specification](docs/SPECIFICATION.md)
@@ -22,16 +22,40 @@ An automation-first library and lifecycle manager for game recompilations on Ste
 - [Technical decisions](docs/DECISIONS.md)
 
 ## Status
-Project definition and foundation. No application functionality is implemented yet. The first milestone is a persistent project library, scanner, and registration GUI.
+Project definition and foundation. No application functionality is implemented yet. Development follows the staged sequence in the roadmap: feet, legs, spine, then head.
 
 ## Initial technical direction
 Python, PySide6, SQLite, Git/GitHub integrations, and safe Steam shortcut integration. These choices may evolve as implementation research proceeds.
 
 ## Final delivery target
-The finished application is intended to be distributed as a standalone **AppImage** for SteamOS/Linux. The user should be able to open it like a desktop application and save/install it into their local user space (for example, under `~/.local`). It should not require a system-wide installation or a terminal-based setup process. The exact desktop integration and installation location will be confirmed and tested on SteamOS.
+The finished application is intended to be distributed as a standalone **AppImage** for SteamOS/Linux. It should open from the desktop/file manager and be straightforward to save/install into the user's local space. Mutable application data must remain outside the read-only AppImage. The exact installation location and desktop integration will be validated on SteamOS.
 
 ## Development workflow: Pin and Assess
-When a blocker or unsupported feature appears, record it as a pinned item with the evidence, affected feature, and current context. Assess whether it is essential, how difficult/risky it is to fix, and whether a simpler reliable approach exists. Decide to fix now, defer, or take the least disruptive alternative. Avoid speculative rewrites and avoid letting temporary workarounds create future breakage.
+When a blocker or unsupported feature appears, record the issue and evidence, assess necessity, repair effort, risk and downstream impact, then decide whether to fix it, defer it, or use a simpler maintainable alternative. Verify the chosen path before proceeding.
 
 ## Working style
-This project is developed deliberately, one verified step at a time. Do not give the user random terminal commands or ask them to try unexplained fixes. Prefer GUI workflows and automate setup, testing, and packaging. Every command should have a clear purpose, be explained briefly, and be followed by inspection of its output before the next step. Keep instructions minimal and reversible; never make destructive changes without explicit approval.
+Develop deliberately, one verified step at a time. Prefer GUI workflows and automation. Do not give random or unexplained terminal commands. Every command must have a clear purpose, be minimal and safe, and have its output inspected before the next step. Destructive changes require explicit approval.
+
+## Design direction
+- Dark-first, with architecture that can support a future light theme; muted violet accent.
+- Persistent left sidebar and spacious library density.
+- Small artwork thumbnails, clear typography, fine separators and restrained surfaces rather than a wall of generic cards.
+- Combined operational and collection dashboard.
+- Library rows keep the main launch action accessible; a contextual three-dot menu provides maintenance actions appropriate to each project.
+- Project detail is a workspace with relevant sections such as Overview, Installation, Repository, Build, Steam, History and Settings.
+- Screens should suit their task; avoid repeating one generic dashboard/card layout everywhere.
+- Visual polish follows working foundations, not placeholder-first design.
+
+## Development sequence
+**Feet — Foundation:** app skeleton, database, stable project identity, configuration, logging, migrations, startup/shutdown and early AppImage feasibility validation.
+
+**Legs — Core systems:** scanning, registration, repository/release awareness, update strategies, safe downloads/builds, executable detection and user-data preservation.
+
+**Spine — Integration:** connect discovery, registry, updates, builds, launch detection and Steam; add background work, recovery and rollback.
+
+**Head — GUI:** finish the visual interface around real, tested workflows and data.
+
+Every stage must leave a working, tested deliverable. Do not build on unverified foundations.
+
+## Final roadmap marker
+Jess Egg
