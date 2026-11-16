@@ -88,3 +88,26 @@ Treat repository metadata, release assets, archives, and build scripts as untrus
 - Replacing Steam as the runtime/library.
 
 The first milestone is a reliable local scanner, persistent library, and registration GUI.
+
+
+## Final delivery and installation
+The final product must be distributed as a standalone AppImage for SteamOS/Linux. It should be launchable by opening the file through the desktop/file manager, without a manual terminal installation sequence. The user should be able to save/install the application into their local user space (a location such as `~/.local` is the current direction, not yet a hard-coded decision). Confirm the exact installation location and desktop integration behaviour through SteamOS testing.
+
+The AppImage must not store mutable application state inside its mounted/read-only image. Store settings, database, logs, cache, and project metadata in appropriate per-user writable locations. Game installations and source/build directories must remain at user-selected paths. Updates to the manager itself should not overwrite managed games or user data.
+
+Packaging is part of the product, not an afterthought. The final workflow should produce a tested AppImage and a simple desktop-friendly way to save/install it locally. Avoid requiring the user to type terminal commands for normal installation, updates, or operation.
+
+## Pin and Assess workflow
+Any blocker, unsupported integration, or feature that proves unexpectedly difficult should be recorded as a pinned issue containing:
+- What was attempted and the desired outcome.
+- Relevant error output/logs and environment details.
+- Which feature/milestone is affected.
+- Whether the feature is essential for the current milestone or can be deferred.
+- Estimated repair effort and technical risk.
+- Potential downstream consequences of a workaround.
+- Recommended options: fix now, defer, or use a simpler alternative.
+
+Choose the path of least resistance that remains maintainable and does not create avoidable future breakage. Do not pursue a technically interesting fix merely because it is possible if a simpler supported approach meets the requirement. Conversely, do not adopt a quick workaround that compromises data safety, project identity, Steam integrity, or future updates. Record the decision and verify it before moving on.
+
+## Command and troubleshooting policy
+The user does not want random terminal commands or trial-and-error. Any command proposed to the user must have a clear purpose and a short explanation. Keep commands minimal, safe, and preferably read-only; explain expected output and inspect the actual output before suggesting the next action. Do not chain speculative commands. Prefer application GUI workflows and automate setup, diagnostics, builds, and packaging. Never suggest destructive operations without explicit approval.
