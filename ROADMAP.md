@@ -1,83 +1,90 @@
 # Roadmap
 
-## Phase 1 — Foundation and library
-- [ ] Python application structure and PySide6 GUI.
-- [ ] SQLite persistence with stable project UUIDs.
-- [ ] Configurable scan locations and read-only discovery.
-- [ ] Detect Git repositories, recomp markers, and ELF, shell, and PE executables.
-- [ ] Manual project registration and editing.
-- [ ] Library view with location, executable, platform, and status.
+Development is intentionally staged as **feet → legs → spine → head**. Each stage must produce a working, verified result before the next becomes its focus.
 
-**Milestone:** Scan directories, review and register candidates, and retain the library across launches.
+## Feet — Foundation
+- [ ] Establish the Python/PySide6 application skeleton and startup/shutdown lifecycle.
+- [ ] Implement SQLite persistence, schema migrations, and stable project UUIDs.
+- [ ] Add per-user configuration, logging, diagnostics, and error handling.
+- [ ] Validate the AppImage/Qt packaging route early on SteamOS; do not leave packaging feasibility until the end.
+- [ ] Establish automated tests and a repeatable development/build environment.
+- [ ] Add a minimal GUI shell sufficient to exercise the foundation.
 
-## Phase 2 — Repository and release awareness
-- [ ] Accept and validate Git URLs; detect repository metadata and branch.
-- [ ] Check GitHub releases and select assets using project rules.
-- [ ] Track source commits, installed version, and latest upstream version.
-- [ ] Display release notes/commit summaries and update strategy.
+**Exit test:** create and save project records, close/reopen the app, and verify data persists without corruption. Confirm the packaging approach is viable on the target platform.
 
-## Phase 3 — Automated updates
-- [ ] Download release assets and verify checksums where available.
-- [ ] Safely extract to staging; prevent archive path traversal.
-- [ ] Update source working trees and run configured build recipes.
-- [ ] Separate replaceable application files from saves, settings, and game assets.
-- [ ] Validate before activation; roll back failed updates.
-- [ ] Maintain logs and update history.
+## Legs — Core systems
+- [ ] Read-only scanning of configured locations with depth and exclusion controls.
+- [ ] Detect Git repositories, recomp/build markers, and ELF, shell, and PE executables.
+- [ ] Group related files into candidates; never register every executable independently.
+- [ ] Manual registration, editing, ignoring and removal from the library.
+- [ ] Repository URL validation and Git metadata tracking.
+- [ ] GitHub release/commit awareness and project-specific asset selection.
+- [ ] Explicit strategies for prebuilt releases, source builds and manual tracking.
+- [ ] Safe staged downloads/extraction; prevent archive traversal and unsafe symlinks.
+- [ ] Explicit, trusted build recipes with logs and dependency checks.
+- [ ] Executable rediscovery after updates/builds, including changed names and paths.
+- [ ] Preserve saves, settings, original game assets and user-managed files.
+- [ ] Keep known-good versions and support rollback.
 
-## Phase 4 — Executable and launch management
-- [ ] Discover executables after install/update/build.
-- [ ] Distinguish Linux binaries/scripts from Windows PE files.
-- [ ] Track launch targets relative to managed roots where possible.
-- [ ] Detect renamed/relocated executables and update launch targets.
-- [ ] Maintain arguments, working directory, and environment.
+**Exit test:** manage at least one real project through registration and its supported update or rebuild path, rediscover its executable, and preserve user data.
 
-## Phase 5 — Steam and Proton
-- [ ] Create non-Steam shortcuts associated with stable project UUIDs.
-- [ ] Detect and update existing entries without duplicates.
-- [ ] Update executable path, arguments, working directory, artwork, and metadata.
-- [ ] Detect installed Proton versions and configure per-project compatibility.
-- [ ] Launch native Linux projects natively; configure Proton for Windows executables.
-- [ ] Preserve unrelated Steam entries/settings using backups and safe writes.
+## Spine — Integration
+- [ ] Connect scanner, project registry, repository tracker, update orchestrator, build runner and executable detector.
+- [ ] Implement a durable background job queue and progress/reporting model.
+- [ ] Connect launch configuration, native Linux launch and per-project Proton handling.
+- [ ] Research and implement safe Steam non-Steam shortcut reconciliation.
+- [ ] Preserve shortcut identity where supported and prevent duplicates.
+- [ ] Update the matching shortcut when an executable changes; leave unrelated Steam entries untouched.
+- [ ] Add transaction boundaries, recovery, rollback and useful activity history.
+- [ ] Test the full lifecycle end-to-end with representative projects.
 
-## Phase 6 — Background automation
-- [ ] Scheduled repository/release checks and update queue.
-- [ ] Background downloads and configurable notify/download/install policies.
-- [ ] Notifications and SteamOS-friendly background integration.
+**Exit test:** a project can be discovered, registered, checked, updated or built, launched, and reconciled with Steam without manually joining the systems together.
 
-## Phase 7 — GUI customisation
-- [ ] Themes, including dark mode.
-- [ ] Card/list layouts, adjustable panels, sorting, filtering, and grouping.
-- [ ] Custom artwork and metadata.
-- [ ] Configurable dashboard/widgets and persisted UI preferences.
+## Head — Finished GUI and experience
+- [ ] Complete the polished desktop interface around the real underlying workflows.
+- [ ] Persistent left sidebar; spacious library rows with small artwork.
+- [ ] Keep the primary launch action visible and provide a contextual three-dot menu per row.
+- [ ] Contextual menu actions may include Check for updates, Open containing folder, Manage project, View logs, Rebuild where supported, and Remove from library.
+- [ ] Removing a project unregisters it only; it must never silently delete project files.
+- [ ] Combined operational and collection dashboard: useful activity, project status, recent work and actionable issues.
+- [ ] Project detail workspace with relevant Overview, Installation, Repository, Build, Steam, History and Settings sections; hide irrelevant capabilities.
+- [ ] Discovery/registration, update queue, activity/history and settings each get layouts suited to their purpose.
+- [ ] Search, filters, sorting and persisted UI preferences.
+- [ ] Dark-first theme with muted violet accent; architecture supports a future light theme.
+- [ ] Subtle transitions, restrained surfaces, clear status text and meaningful icons.
+- [ ] Validate keyboard, mouse, handheld desktop-mode and accessibility basics.
 
-## Phase 8 — Reliability and polish
-- [ ] Dependency detection, diagnostics, and project health checks.
-- [ ] Backup/restore and import/export project definitions.
-- [ ] Packaging, documentation, and tests with representative projects.
+**Exit test:** the full application is understandable and comfortable to use without requiring the user to understand Git, CMake, Ninja, executable paths, Proton prefixes or Steam shortcut internals.
+
+## Final delivery and acceptance
+- [ ] Produce a standalone SteamOS/Linux AppImage.
+- [ ] Open it from the desktop/file manager and provide a simple user-space save/install path.
+- [ ] Keep mutable state in writable per-user locations, not inside the AppImage.
+- [ ] Confirm desktop integration and installation location through SteamOS testing.
+- [ ] Reproducible packaging, upgrade path, documentation and final regression tests.
+- [ ] Verify backup/restore and ensure manager updates do not overwrite managed games or user data.
 
 ## Delivery principles
 1. Prefer automation and sensible defaults over repeated prompts.
 2. Ask only when a genuine ambiguity or risk cannot be resolved automatically.
-3. Never overwrite saves, user configuration, or original game assets during routine updates.
-4. Stage and validate updates; retain rollback capability.
-5. Preserve unrelated Steam entries and settings.
-6. Use project definitions/recipes for special cases instead of hardcoding games into the app.
-
-
-## Final packaging and installation requirement
-- [ ] Produce a standalone SteamOS/Linux AppImage as the final distributable.
-- [ ] Ensure it launches by opening the AppImage from the desktop/file manager.
-- [ ] Provide a simple option to save/install it into the user's local space (target such as `~/.local`, exact location to be validated).
-- [ ] Keep application data/configuration in appropriate per-user locations, separate from the AppImage itself.
-- [ ] Test desktop integration and launch behaviour on SteamOS.
-- [ ] Avoid requiring users to run a sequence of terminal commands to install or operate the application.
+3. Scanning is read-only; never move, rename, delete or modify discovered files.
+4. Never overwrite saves, user configuration or original game assets during routine updates.
+5. Stage and validate updates; retain rollback capability.
+6. Preserve unrelated Steam entries and settings.
+7. Use project definitions/recipes for special cases instead of hardcoding games into the app.
+8. Never execute arbitrary downloaded build scripts without an explicit trusted project build configuration.
+9. Do not identify projects by executable name or path; use stable UUIDs.
+10. Do not build later stages on untested foundations.
 
 ## Pin and Assess process
-When a blocker, missing capability, or awkward integration is encountered:
-1. **Pin** — record the issue, relevant logs/output, affected feature, and what was being attempted.
-2. **Assess** — determine whether it is required now, its likely repair effort, technical risk, and downstream impact.
+When a blocker, missing capability, or unexpectedly difficult integration is encountered:
+1. **Pin** — record the issue, relevant logs/output, affected feature and what was attempted.
+2. **Assess** — determine whether it is essential now, likely repair effort, technical risk and downstream impact.
 3. **Choose** — fix now, defer with a clear note, or select a simpler reliable alternative.
-4. **Protect** — prefer the path of least resistance that does not create fragile workarounds or future architectural problems.
-5. **Verify** — test the chosen approach before proceeding and record the decision.
+4. **Protect** — choose the least fragile maintainable path without compromising data safety, project identity or future compatibility.
+5. **Verify** — test the selected approach and record the decision before proceeding.
 
-The user should not be sent random commands to see whether something works. Commands must be purposeful, explained, minimal, and validated against their output. Prefer GUI operations and automate repetitive setup/build/package tasks.
+No speculative commands or random trial-and-error. Commands must be purposeful, explained, minimal and validated against actual output. Prefer GUI workflows and automate repetitive setup, testing and packaging.
+
+## Final roadmap marker
+Jess Egg
