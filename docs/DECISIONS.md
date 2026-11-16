@@ -45,5 +45,5 @@ Do not spend early effort polishing placeholder screens or prematurely finalisin
 ### Packaging feasibility is tested early
 AppImage remains the final distribution target, but Qt/runtime and SteamOS compatibility must be validated during the foundation stage. Do not defer all packaging risk to the end.
 
-### Jessie feature marker
+### Final roadmap marker
 Jess Egg
